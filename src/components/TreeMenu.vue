@@ -26,7 +26,7 @@ export default {
       return `text-indent: ${this.depth * 25}px`;
     },
     hasSubordinates() {
-      return this.employee.subordinates;
+      return this.employee.subordinates.length > 0;
     },
   },
   methods: {

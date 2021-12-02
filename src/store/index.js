@@ -1,12 +1,10 @@
 import Vue from 'vue';
-import Vuelidate from 'vuelidate';
 import Vuex from 'vuex';
 import VuexPersistence from 'vuex-persist';
 
 Vue.use(Vuex);
-Vue.use(Vuelidate);
 
-import { deepSort, flatten, appendEmployee } from '@/js';
+import { deepSort, flatten, appendEmployee } from './helpers';
 
 export default new Vuex.Store({
   state: {
@@ -26,6 +24,7 @@ export default new Vuex.Store({
         {
           ...employee,
           id: state.idCount,
+          subordinates: [],
         }
       );
       state.idCount++;
@@ -44,6 +43,9 @@ export default new Vuex.Store({
     updateEmployees({ commit }, employee) {
       commit('addEmployee', employee);
       commit('setEmployeeList');
+    },
+    sortEmployees({ commit }, column) {
+      commit('sortEmployees', column);
     },
   },
   modules: {},

@@ -1,5 +1,4 @@
-import Vue from 'vue';
-import _ from 'underscore';
+import sortBy from 'lodash/sortBy';
 
 function appendEmployee(arr, newEmployee) {
   let employeeData = { ...newEmployee };
@@ -7,9 +6,8 @@ function appendEmployee(arr, newEmployee) {
   else {
     for (var i = 0; i < arr.length; i++) {
       if (arr[i].id === newEmployee.superior) {
-        if ('subordinates' in arr[i]) arr[i].subordinates.push(employeeData);
-        else Vue.set(arr[i], 'subordinates', [employeeData]);
-      } else if ('subordinates' in arr[i]) {
+        arr[i].subordinates.push(employeeData);
+      } else if (arr[i].subordinates.length > 0) {
         appendEmployee(arr[i].subordinates, newEmployee);
       }
     }
@@ -18,9 +16,9 @@ function appendEmployee(arr, newEmployee) {
 }
 
 function deepSort(arr, column) {
-  arr = _.sortBy(arr, column);
+  arr = sortBy(arr, column);
   for (var i = 0; i < arr.length; i++) {
-    if ('subordinates' in arr[i]) {
+    if (arr[i].subordinates.length > 0) {
       arr[i].subordinates = deepSort(arr[i].subordinates, column);
     }
   }
@@ -36,11 +34,11 @@ function flatten(arr) {
         name: arr[i].name,
       },
     ]);
-    if ('subordinates' in arr[i]) {
+    if (arr[i].subordinates.length > 0) {
       list = list.concat(flatten(arr[i].subordinates));
     }
   }
-  return _.sortBy(list, 'name');
+  return sortBy(list, 'name');
 }
 
 export { appendEmployee, deepSort, flatten };

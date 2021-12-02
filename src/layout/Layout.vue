@@ -23,7 +23,7 @@ div
 import EmployeeTable from '@/components/EmployeeTable';
 import AddModalWindow from '@/components/AddModalWindow';
 import TreeMenu from '@/components/TreeMenu';
-import { mapState, mapMutations, mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'Layout',
@@ -36,8 +36,7 @@ export default {
     ...mapState(['employeeTree', 'employeeList']),
   },
   methods: {
-    ...mapMutations(['sortEmployees']),
-    ...mapActions(['updateEmployees']),
+    ...mapActions(['sortEmployees', 'updateEmployees']),
     showModal() {
       this.isModalVisible = true;
     },
